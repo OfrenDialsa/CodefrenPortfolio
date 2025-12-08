@@ -1,0 +1,16 @@
+export const skills = [
+  "React",
+  "React Native",
+  "Next.js",
+  "Express.js",
+  "Hapi.js",
+  "Typescript",
+  "Node.js",
+  "Jetpack Compose",
+  "Kotlin",
+  "Go-Gin",
+  "Laravel",
+  "Postgres",
+  "Docker",
+  "Kubernetes",
+];
