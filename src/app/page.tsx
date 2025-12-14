@@ -15,6 +15,8 @@ import dynamic from "next/dynamic";
 import LazySection from "@/components/LazySection";
 import { useState } from "react";
 import { BadgeAnimated } from "@/components/ui/badgeanimation";
+import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const Lanyard = dynamic(() => import("@/components/Lanyard"));
 const RotatingText = dynamic(() => import("@/components/RotatingText"));
@@ -31,6 +33,7 @@ export default function Page() {
   const [selectedType, setSelectedType] = useState(DATA.projects[0].type);
   const filteredProjects =
     DATA.projects.find((p) => p.type === selectedType)?.projects || [];
+  const isMobile = useIsMobile();
 
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-10">
@@ -70,14 +73,7 @@ export default function Page() {
                     rotationInterval={2000}
                   />
                 </BlurFade>
-                <BlurFadeText
-                  delay={BLUR_FADE_DELAY * 3}
-                  className="text-4xl sm:text-5xl xl:text-5xl font-bold tracking-tighter"
-                  yOffset={8}
-                  text={`👋`}
-                />
               </div>
-
               <BlurFadeText
                 className="max-w-[600px] md:text-lg"
                 delay={BLUR_FADE_DELAY * 3 + 0.2}
@@ -87,12 +83,22 @@ export default function Page() {
 
             <div
               className="flex justify-center items-center bg-transparent size-32 md:size-40 -translate-y-6 md:-translate-y-8 relative z-0"
-              style={{
-                pointerEvents: "auto",
-                isolation: "isolate",
-              }}
+              style={{ pointerEvents: "auto", isolation: "isolate" }}
             >
-              <Lanyard position={[0, 0, 32]} gravity={[0, -40, 0]} />
+              {isMobile ? (
+                <BlurFade delay={BLUR_FADE_DELAY * 13}>
+                  <Image
+                    src="/me.webp"
+                    alt="Ofren"
+                    width={160}
+                    height={160}
+                    priority
+                    className="rounded-full object-cover"
+                  />
+                </BlurFade>
+              ) : (
+                <Lanyard position={[0, 0, 32]} gravity={[0, -40, 0]} />
+              )}
             </div>
           </div>
         </div>
@@ -228,7 +234,9 @@ export default function Page() {
 
           <BlurFade delay={BLUR_FADE_DELAY * 20}>
             <div className="text-center text-muted-foreground text-sm sm:text-base">
-              {"Note: You can explore more of my projects on my GitHub profile :)"}
+              {
+                "Note: You can explore more of my projects on my GitHub profile :)"
+              }
             </div>
           </BlurFade>
         </section>
